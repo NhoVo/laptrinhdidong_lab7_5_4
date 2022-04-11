@@ -7,11 +7,12 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/textView"
+        android:id="@+id/editname"
         android:layout_width="380dp"
         android:layout_height="49dp"
         android:hint="Put name to add"
         android:textColor="@color/black"
+        android:inputType="textPersonName"
         android:paddingTop="10dp"
         android:paddingLeft="55dp"
         android:background="@drawable/textview_border"
@@ -29,31 +30,31 @@
         android:layout_width="44dp"
         android:layout_height="41dp"
         android:paddingTop="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="@+id/editname"
+        app:layout_constraintEnd_toEndOf="@+id/editname"
         app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/editname"
+        app:layout_constraintTop_toTopOf="@+id/editname"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_account_circle_24"
         app:tint="#3968E2" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonAdd"
         android:layout_width="104dp"
         android:layout_height="60dp"
         android:layout_marginStart="15dp"
         android:background="@drawable/boder_button"
         android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
         app:layout_constraintHorizontal_bias="0.294"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/editname"
         app:layout_constraintVertical_bias="0.034" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonRemove"
         android:layout_width="104dp"
         android:layout_height="60dp"
         android:layout_marginStart="15dp"
@@ -64,11 +65,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/editname"
         app:layout_constraintVertical_bias="0.033" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonCancel"
         android:layout_width="104dp"
         android:layout_height="60dp"
         android:layout_marginEnd="15dp"
@@ -77,17 +78,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/buttonRemove"
+        app:layout_constraintTop_toBottomOf="@+id/editname"
         app:layout_constraintVertical_bias="0.033" />
 
     <ListView
+        android:id="@+id/idlistView"
         android:layout_width="409dp"
-        android:layout_height="584dp"
+        android:listSelector="#208CC9"
+        android:layout_height="583dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRemove"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

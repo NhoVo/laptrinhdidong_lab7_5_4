@@ -100,10 +100,10 @@ public class DatabaseHandler_Item extends SQLiteOpenHelper {
                 new String[] { String.valueOf(items.getId()) });
     }
 
-    public void deleteContact(item item) {
+    public void deleteContact(int item) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(item.getId()) });
+                new String[] { String.valueOf(item) });
         db.close();
     }
     public int getItemCount() {

@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Laptrinhdidong_lab7_4_5">
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
         <activity
-            android:name=".MainActivity"
+            android:name=".mainActivity_item"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

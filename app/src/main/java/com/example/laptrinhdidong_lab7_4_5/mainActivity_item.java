@@ -4,74 +4,94 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class mainActivity_item extends AppCompatActivity {
+    private EditText editTextName;
+    private Button btnAdd, btnRemove, btnCancel;
+    private ListView listView;
+    private List<item> listitem;
+    private ItemAdapter adapter;
+    private int index;
+    private DatabaseHandler_Item db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        DatabaseHandler db = new DatabaseHandler(this);
+    setContentView(R.layout.activity_main);
+    //getid
+    editTextName = findViewById(R.id.editname);
+    btnAdd = findViewById(R.id.buttonAdd);
+    btnRemove= findViewById(R.id.buttonRemove);
+    btnCancel=findViewById(R.id.buttonCancel);
+    listView = findViewById(R.id.idlistView);
 
-        // Inserting Contacts
-        Log.d("Insert: ", "Inserting ..");
-        db.addContact(new Contact("Ravi", "9100000000"));
-        db.addContact(new Contact("Srinivas", "9199999999"));
-        db.addContact(new Contact("Tommy", "9522222222"));
-        db.addContact(new Contact("Karthik", "9533333333"));
+    db = new DatabaseHandler_Item(this);
+    //loaddata
+loadDataToListview();
+        //oclick
+     btnAdd.setOnClickListener(new View.OnClickListener()
+     {
 
-        // Reading all contacts
-        Log.d("Reading: ", "Reading all contacts..");
-        List<Contact> contacts = db.getAllContacts();
+         @Override
+         public void onClick(View view) {
+             String name = editTextName.getText().toString().trim();
+             if(name.isEmpty())
+             {
+                 Toast.makeText(mainActivity_item.this,"Vui lòng nhập tên",Toast.LENGTH_LONG).show();
+                 return;
+             }
+             db.addContact(new item(name));
+             loadDataToListview();
+              editTextName.setText("");
+              Toast.makeText(mainActivity_item.this,"bạn vừa thêm "+name,Toast.LENGTH_LONG).show();
 
-        for (Contact cn : contacts) {
-            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Phone: " +
-                    cn.getPhoneNumber();
-            // Writing Contacts to log
-            Log.d("Name: ", log);
-        }
+         }
+     });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-        //
-        EditText editText= findViewById(R.id.textView);
-        editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(keyEvent.getAction() == keyEvent.ACTION_DOWN && keyEvent.getKeyCode() == keyEvent.KEYCODE_ENTER)
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                index=i;
+                item Item =db.getitem(listitem.get(index).getId());
+                editTextName.setText(Item.getPutname());
+            }
+        });
+        btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editTextName.getText().toString().isEmpty())
                 {
-                    String name = editText.getText().toString().trim();
-
+                    Toast.makeText(mainActivity_item.this, "Bạn chưa chọn tên cần xóa", Toast.LENGTH_SHORT).show();
                 }
-                return false;
-            }
-        });
-        //add
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                db.deleteContact(listitem.get(index).getId());
+                loadDataToListview();
+                editTextName.setText("");
+                Toast.makeText(mainActivity_item.this, "Bạn xóa thành công", Toast.LENGTH_SHORT).show();
 
             }
         });
-        //remove
-        Button button2 = findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                editTextName.setText(" ");
+                loadDataToListview();
             }
         });
-        //cancel
-        Button button3= findViewById(R.id.button3);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+
+    }
+    public void loadDataToListview(){
+        listitem = db.getAllContacts();
+        adapter= new ItemAdapter(mainActivity_item.this,R.layout.listview_item,listitem);
+        listView.setAdapter(adapter);
     }
 }
